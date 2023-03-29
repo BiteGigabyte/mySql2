@@ -69,7 +69,7 @@
       <workItem from="1679782062157" duration="19092000" />
       <workItem from="1679832820193" duration="10938000" />
       <workItem from="1680014701658" duration="43000" />
-      <workItem from="1680020249879" duration="16134000" />
+      <workItem from="1680020249879" duration="20227000" />
     </task>
     <task id="LOCAL-00001" summary="-">
       <created>1679951145252</created>
@@ -92,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680103322109</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="- майже завершив mysql 2/2">
+      <created>1680106290020</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1680106290020</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

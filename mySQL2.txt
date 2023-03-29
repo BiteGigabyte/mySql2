@@ -251,6 +251,7 @@ group by Currency, c.idClient
 order by Sum asc
 limit 2;
 #
+# хотів зробити по 3 різних валютах і обєднати таблицю але або не йдуть 3 валюти або 2 таблиця не обєднується і наоборот
 SELECT MIN(Sum) as Sum, Currency
 FROM application
          JOIN client c ON c.idClient = application.Client_idClient
@@ -260,15 +261,36 @@ ORDER BY Sum ASC
 LIMIT 3;
 
 # 25.Знайти кредити, сума яких більша за середнє значення усіх кредитів
-
-select * from department;
-select * from application;
-select * from client;
 #
-
-
-
+select * from application
+where Sum > (select avg(Sum) from application)
+order by Sum asc;
 
 # 26. Знайти клієнтів, які є з того самого міста, що і клієнт, який взяв найбільшу кількість кредитів
 #
+select * from client
+where City = (select client.City from client
+             join application a on client.idClient = a.Client_idClient
+             group by Client_idClient
+             order by count(Client_idClient) desc
+             limit 1
+             );
+#
+select *
+from client
+where City = (
+    select c.City
+    from client c
+             join application a on c.idclient = a.client_idclient
+    group by idclient
+    order by count(Client_idClient) desc
+    limit 1
+);
+
 # 27. Місто клієнта з найбільшою кількістю кредитів
+#
+select * from department;
+select * from application;
+select * from client;
+
+
