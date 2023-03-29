@@ -203,17 +203,13 @@ join client c on application.Client_idClient = c.idClient
         LastName like '_u%' or
         LastName like '_o%' or
         LastName like '_a%';
-
-
+# or
+#
 delete application from application
 join client c on c.idClient = application.Client_idClient
 where LastName regexp '^.[eiyuao].*';
 
 # 21.Знайти львівські відділення, які видали кредитів на загальну с уму більше ніж 5000
-
-select * from department;
-select * from application;
-select * from client;
 #
 select sum(Sum) as Sum, idDepartment, DepartmentCity, Currency from department
 join client c on department.idDepartment = c.Department_idDepartment
@@ -223,16 +219,56 @@ where Currency = 'Gryvnia' and DepartmentCity = 'lviv'
    or Currency = 'Euro' and DepartmentCity = 'lviv'
 group by Currency, DepartmentCity, idDepartment
 having sum(Sum) > 5000;
-
+#
+# це я провіряв чи правильно виводить нижче
+select Client_idClient, Sum, idDepartment, Currency from application
+join client c on application.Client_idClient = c.idClient
+join department d on c.Department_idDepartment = d.idDepartment
+where DepartmentCity = 'lviv'
+order by Currency;
 
 # 22.Знайти клієнтів, які повністю погасили кредити на суму більше ніж 5000
 #
+select client.* from client
+join application a on client.idClient = a.Client_idClient
+where Sum > 5000 and CreditState = 'returned';
+
 # 23.Знайти максимальний неповернений кредит.
 #
+select max(Sum) as Sum, Currency from application
+where CreditState like 'not returned'
+group by Sum, Currency
+order by Sum desc
+limit 1;
+
 # 24.Знайти клієнта, сума кредиту якого найменша
 #
-# 25.Знайти кредити, сума яких більша за середнє значення усіх кредитів
+select min(Sum) as Sum, Currency, c.*
+from application
+join client c on c.idClient = application.Client_idClient
+where Currency = 'Dollar' or Currency = 'Gryvnia' or Currency = 'Euro'
+group by Currency, c.idClient
+order by Sum asc
+limit 2;
 #
+SELECT MIN(Sum) as Sum, Currency
+FROM application
+         JOIN client c ON c.idClient = application.Client_idClient
+WHERE Currency IN ('Dollar', 'Gryvnia', 'Euro')
+GROUP BY Currency
+ORDER BY Sum ASC
+LIMIT 3;
+
+# 25.Знайти кредити, сума яких більша за середнє значення усіх кредитів
+
+select * from department;
+select * from application;
+select * from client;
+#
+
+
+
+
 # 26. Знайти клієнтів, які є з того самого міста, що і клієнт, який взяв найбільшу кількість кредитів
 #
 # 27. Місто клієнта з найбільшою кількістю кредитів
