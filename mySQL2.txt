@@ -289,6 +289,17 @@ where City = (
 
 # 27. Місто клієнта з найбільшою кількістю кредитів
 #
+SELECT * FROM client
+    JOIN application a ON client.idClient = a.Client_idClient
+        WHERE a.Client_idClient = (
+            SELECT Client_idClient
+            FROM application
+            GROUP BY Client_idClient
+            ORDER BY COUNT(Client_idClient) DESC LIMIT 1
+        );
+
+
+#
 select * from department;
 select * from application;
 select * from client;
